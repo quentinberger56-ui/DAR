@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>EVA Joueuses</title>
+
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+background:#f2f2f2;
+padding:15px;
+}
+
+
+.container{
+
+max-width:600px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:20px;
+
+}
+
+
+h1{
+text-align:center;
+}
+
+
+input[type=text]{
+
+width:100%;
+padding:12px;
+margin-bottom:15px;
+font-size:16px;
+
+}
+
+
+.question{
+
+margin-top:30px;
+
+}
+
+
+.titre{
+
+font-weight:bold;
+line-height:1.4;
+
+}
+
+
+input[type=range]{
+
+width:100%;
+height:10px;
+
+}
+
+
+.labels{
+
+display:flex;
+justify-content:space-between;
+font-size:12px;
+color:#555;
+
+}
+
+
+.valeur{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+
+}
+
+
+button{
+
+width:100%;
+padding:15px;
+margin-top:30px;
+
+background:#111;
+color:white;
+
+border:none;
+border-radius:10px;
+
+font-size:18px;
+
+}
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>Ressenti séance / match</h1>
+
+
+<input id="nom" placeholder="Nom">
+
+<input id="prenom" placeholder="Prénom">
+
+
+
+<div id="questions"></div>
+
+
+<button onclick="envoyer()">
+Envoyer mes réponses
+</button>
+
+
+</div>
+
+
+
+<script>
+
+
+const URL_GOOGLE_SHEET =
+"COLLER_ICI_URL_SCRIPT_GOOGLE";
+
+
+
+const questions=[
+
+
+["A",
+"Comment as-tu perçu ta relation avec le ballon ?",
+"Relation très difficile avec le ballon",
+"Totale connexion avec le ballon (fluidité, précision, vitesse)"
+],
+
+
+["B",
+"As-tu eu le sentiment de percevoir le jeu avec clarté, fluidité, précision et rapidité ?",
+"Lecture du jeu très difficile",
+"Je me suis senti totalement connecté au jeu"
+],
+
+
+["C",
+"As-tu réussi à résoudre les problèmes posés par le jeu ?",
+"Difficultés à trouver des solutions",
+"Grande facilité à trouver des solutions efficaces"
+],
+
+
+["D",
+"À quel point la séance/match t'a-t-elle semblé difficile ?",
+"Extrêmement facile",
+"Effort insoutenable"
+],
+
+
+["E",
+"Comment as-tu perçu ta capacité à enchaîner les efforts ?",
+"Incapacité totale à répéter les efforts",
+"Capacité à répéter les efforts très élevée (cardio, musculaire, mental)"
+],
+
+
+["F",
+"As-tu ressenti du plaisir au cours de la séance/match ?",
+"Aucun plaisir ressenti",
+"Plaisir maximal ressenti"
+],
+
+
+["G",
+"À quel point as-tu trouvé du sens dans cet entraînement/match ?",
+"Aucun sens",
+"Beaucoup de sens"
+],
+
+
+["H",
+"Comment as-tu perçu ton niveau de concentration ?",
+"Très difficile de rester concentré",
+"Concentration maximale tout au long de la séance/match"
+
+]
+
+
+];
+
+
+
+let reponses={};
+
+
+
+let zone=document.getElementById("questions");
+
+
+
+questions.forEach(q=>{
+
+
+zone.innerHTML += `
+
+<div class="question">
+
+
+<div class="titre">
+${q[0]} - ${q[1]}
+</div>
+
+
+<input 
+type="range"
+id="${q[0]}"
+min="0"
+max="10"
+step="0.1"
+value="5"
+>
+
+
+<div class="labels">
+
+<span>
+0 : ${q[2]}
+</span>
+
+<span>
+10 : ${q[3]}
+</span>
+
+</div>
+
+
+<div class="valeur" id="v${q[0]}">
+5 / 10
+</div>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+questions.forEach(q=>{
+
+
+let slider=document.getElementById(q[0]);
+
+let affichage=document.getElementById("v"+q[0]);
+
+
+
+slider.oninput=function(){
+
+affichage.innerHTML=
+parseFloat(this.value).toFixed(1)+" / 10";
+
+
+reponses[q[0]]=this.value;
+
+};
+
+
+});
+
+
+
+
+function envoyer(){
+
+
+
+reponses.nom=document.getElementById("nom").value;
+
+reponses.prenom=document.getElementById("prenom").value;
+
+
+
+fetch(URL_GOOGLE_SHEET,{
+
+method:"POST",
+
+body:JSON.stringify(reponses)
+
+})
+
+
+.then(()=>{
+
+alert("Merci pour ton retour !");
+
+location.reload();
+
+});
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
