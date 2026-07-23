@@ -62,10 +62,37 @@ line-height:1.4;
 }
 
 
-input[type=range]{
+input[type="range"] {
+    width: 100%;
+    height: 6px;
+    appearance: none;
+    background: #cccccc;
+    border-radius: 5px;
+    outline: none;
+}
 
-width:100%;
-height:10px;
+
+/* Curseur sur ordinateur */
+input[type="range"]::-webkit-slider-thumb {
+
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: #111;
+    border-radius: 50%;
+    cursor: pointer;
+
+}
+
+
+/* Curseur sur téléphone */
+input[type="range"]::-moz-range-thumb {
+
+    width: 24px;
+    height: 24px;
+    background: #111;
+    border-radius: 50%;
+    cursor: pointer;
 
 }
 
