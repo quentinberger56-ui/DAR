@@ -311,21 +311,7 @@ ${q[3]}
 questions.forEach(q=>{
 
 
-let slider=document.getElementById(q[0]);
-
-let affichage=document.getElementById("v"+q[0]);
-
-
-
 slider.onchange=function(){
-
-affichage.style.display="block";
-
-affichage.innerHTML=
-"Votre ressenti : "
-+parseFloat(this.value).toFixed(1)
-+" / 10";
-
 
 reponses[q[0]]=this.value;
 
