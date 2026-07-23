@@ -318,10 +318,14 @@ let affichage=document.getElementById("v"+q[0]);
 
 
 
-slider.oninput=function(){
+slider.onchange=function(){
+
+affichage.style.display="block";
 
 affichage.innerHTML=
-parseFloat(this.value).toFixed(1)+" / 10";
+"Votre ressenti : "
++parseFloat(this.value).toFixed(1)
++" / 10";
 
 
 reponses[q[0]]=this.value;
