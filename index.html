@@ -310,10 +310,12 @@ ${q[3]}
 
 questions.forEach(q=>{
 
+let slider=document.getElementById(q[0]);
+
 
 slider.oninput=function(){
 
-reponses[q[0]]=this.value;
+    reponses[q[0]]=this.value;
 
 };
 
