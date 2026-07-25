@@ -12,6 +12,7 @@
 <title>EVA Joueuses</title>
 
 
+
 <style>
 
 body{
@@ -139,7 +140,15 @@ border-radius:10px;
 font-size:18px;
 
 }
+/* Curseur invisible tant que la joueuse n'a pas touché la barre */
 
+.eva-slider.not-selected::-webkit-slider-thumb{
+    opacity:0;
+}
+
+.eva-slider.not-selected::-moz-range-thumb{
+    opacity:0;
+}
 
 </style>
 
@@ -368,12 +377,4 @@ location.reload();
 
 </html>
 
-/* Curseur invisible tant que la joueuse n'a pas touché la barre */
 
-.eva-slider.not-selected::-webkit-slider-thumb{
-    opacity:0;
-}
-
-.eva-slider.not-selected::-moz-range-thumb{
-    opacity:0;
-}
