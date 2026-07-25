@@ -267,13 +267,14 @@ ${q[0]} - ${q[1]}
 </div>
 
 
-<input 
+<input
 type="range"
 id="${q[0]}"
 min="0"
-max="10"
-step="0.1"
-value="5"
+max="100"
+step="1"
+value="0"
+class="eva-slider not-selected"
 >
 
 
@@ -287,7 +288,7 @@ ${q[2]}
 
 <div style="text-align:right">
 
-<strong>10</strong><br>
+<strong>100</strong><br>
 ${q[3]}
 
 </div>
@@ -315,10 +316,13 @@ let slider=document.getElementById(q[0]);
 
 slider.oninput=function(){
 
-    reponses[q[0]]=this.value;
+    // Le curseur devient visible dès la première interaction
+    this.classList.remove("not-selected");
+
+    // Enregistre la réponse
+    reponses[q[0]] = this.value;
 
 };
-
 
 });
 
@@ -363,3 +367,13 @@ location.reload();
 </body>
 
 </html>
+
+/* Curseur invisible tant que la joueuse n'a pas touché la barre */
+
+.eva-slider.not-selected::-webkit-slider-thumb{
+    opacity:0;
+}
+
+.eva-slider.not-selected::-moz-range-thumb{
+    opacity:0;
+}
