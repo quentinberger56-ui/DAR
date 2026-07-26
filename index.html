@@ -1,380 +1,337 @@
 <!DOCTYPE html>
-
 <html lang="fr">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
 <title>EVA Joueuses</title>
 
-
-
 <style>
-
-body{
-font-family:Arial, sans-serif;
-background:#f2f2f2;
-padding:15px;
+* {
+  box-sizing: border-box;
 }
 
-
-.container{
-
-max-width:600px;
-margin:auto;
-background:white;
-padding:20px;
-border-radius:20px;
-
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  padding: 15px;
+  margin: 0;
+  transition: background 0.3s ease;
 }
 
-
-h1{
-text-align:center;
+/* Changement de fond pour l'avant-pratique */
+body.mode-avant {
+  background: #e8f4f8; /* Fond légèrement bleu/bleuté pour marquer la différence */
 }
 
-
-input[type=text]{
-
-width:100%;
-padding:12px;
-margin-bottom:15px;
-font-size:16px;
-
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-
-.question{
-
-margin-top:30px;
-
+h1 {
+  text-align: center;
+  margin-top: 0;
+  color: #111;
 }
 
-
-.titre{
-
-font-weight:bold;
-line-height:1.4;
-
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
+.question {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.header-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titre {
+  font-weight: bold;
+  line-height: 1.4;
+  padding-right: 10px;
+}
+
+.valeur-bulle {
+  font-size: 18px;
+  font-weight: bold;
+  background: #111;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 12px;
+  min-width: 45px;
+  text-align: center;
+  visibility: hidden;
+}
 
 input[type="range"] {
-
-    width:100%;
-    height:8px;
-    appearance:none;
-    background:#d0d0d0;
-    border-radius:10px;
-    outline:none;
-    margin-top:20px;
-
+  width: 100%;
+  height: 8px;
+  appearance: none;
+  background: #d0d0d0;
+  border-radius: 10px;
+  outline: none;
+  margin-top: 15px;
 }
-
 
 /* Curseur Chrome / Safari / Edge */
-
 input[type="range"]::-webkit-slider-thumb {
-
-    appearance:none;
-    width:32px;
-    height:32px;
-    background:#111;
-    border-radius:50%;
-    cursor:pointer;
-    border:3px solid white;
-    box-shadow:0 2px 6px rgba(0,0,0,0.3);
-
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  background: #111;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
-
 
 /* Curseur Firefox */
-
 input[type="range"]::-moz-range-thumb {
-
-    width:32px;
-    height:32px;
-    background:#111;
-    border-radius:50%;
-    cursor:pointer;
-    border:3px solid white;
-
+  width: 32px;
+  height: 32px;
+  background: #111;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid white;
 }
 
-
-.labels{
-
-display:flex;
-justify-content:space-between;
-font-size:12px;
-color:#555;
-
+.labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #555;
+  margin-top: 5px;
 }
 
-
-.valeur{
-
-text-align:center;
-font-size:22px;
-font-weight:bold;
-
-}
-
-
-button{
-
-width:100%;
-padding:15px;
-margin-top:30px;
-
-background:#111;
-color:white;
-
-border:none;
-border-radius:10px;
-
-font-size:18px;
-
-}
 /* Curseur invisible tant que la joueuse n'a pas touché la barre */
-
-.eva-slider.not-selected::-webkit-slider-thumb{
-    opacity:0;
+.eva-slider.not-selected::-webkit-slider-thumb {
+  opacity: 0;
+}
+.eva-slider.not-selected::-moz-range-thumb {
+  opacity: 0;
 }
 
-.eva-slider.not-selected::-moz-range-thumb{
-    opacity:0;
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 15px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
+button.btn-menu {
+  padding: 22px;
+  margin-top: 15px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+
+button.secondaire {
+  background: #666;
+}
+
+button:disabled {
+  background: #888;
+  cursor: not-allowed;
+}
+
+.cacher {
+  display: none !important;
+}
 </style>
-
 </head>
-
-
 
 <body>
 
-
 <div class="container">
 
+  <!-- PAGE D'ACCUEIL -->
+  <div id="page-accueil">
+    <h1>Menu Principal</h1>
+    <p style="text-align: center; color: #555; margin-bottom: 25px;">Sélectionne ton questionnaire :</p>
+    
+    <button class="btn-menu" onclick="choisirFormulaire('avant')">
+      ⚡ Questionnaire AVANT pratique
+    </button>
+    
+    <button class="btn-menu secondaire" onclick="choisirFormulaire('apres')">
+      📋 Questionnaire APRÈS pratique
+    </button>
+  </div>
 
-<h1>Ressenti séance / match</h1>
+  <!-- ZONE DU FORMULAIRE -->
+  <div id="page-formulaire" class="cacher">
+    <h1 id="titre-formulaire">Ressenti</h1>
 
+    <input type="text" id="nom" placeholder="Nom">
+    <input type="text" id="prenom" placeholder="Prénom">
 
-<input id="nom" placeholder="Nom">
+    <div id="questions"></div>
 
-<input id="prenom" placeholder="Prénom">
-
-
-
-<div id="questions"></div>
-
-
-<button onclick="envoyer()">
-Envoyer mes réponses
-</button>
-
+    <button id="btn-envoyer" onclick="envoyer()">Envoyer mes réponses</button>
+    <button type="button" class="secondaire" onclick="retourAccueil()">Retour au menu</button>
+  </div>
 
 </div>
-
-
 
 <script>
+const URL_GOOGLE_SHEET = "https://script.google.com/macros/s/AKfycbxOsc4TM6dlPRrRYPjgft_KAYfkfqqP3Zj_BFDBZuFuG6QOW4nduXgrsj832vSlImZslw/exec";
 
-
-const URL_GOOGLE_SHEET =
-"https://script.google.com/macros/s/AKfycbxOsc4TM6dlPRrRYPjgft_KAYfkfqqP3Zj_BFDBZuFuG6QOW4nduXgrsj832vSlImZslw/exec";
-
-
-
-const questions=[
-
-
-["A",
-"Comment as-tu perçu ta relation avec le ballon ?",
-"Excellente",
-"Extrêmement difficile"
-],
-
-
-["B",
-"As-tu eu le sentiment de percevoir le jeu avec clarté, fluidité, précision et rapidité ?",
-"Tout à fait",
-"Pas du tout"
-],
-
-
-["C",
-"As-tu réussi à résoudre les problèmes posés par le jeu ?",
-"tout à fait",
-"Pas du tout"
-],
-
-
-["D",
-"À quel point la séance/match t'a-t-elle semblé difficile ?",
-"Extrêmement facile",
-"Effort insoutenable"
-],
-
-
-["E",
-"Comment as-tu perçu ta capacité à enchaîner les efforts ?",
-"Excellente",
-"Extrêmement mauvaise"
-],
-
-
-["F",
-"As-tu ressenti du plaisir au cours de la séance/match ?",
-"Maximal",
-"Aucun"
-],
-
-
-["G",
-"À quel point as-tu trouvé du sens dans cet entraînement/match ?",
-"Maximal",
-"Aucun"
-],
-
-
-["H",
-"Comment as-tu perçu ton niveau de concentration ?",
-"Excellent",
-"Extrêmement mauvais"
-
-]
-
-
+// Questionnaire APRÈS pratique
+const questionsApres = [
+  ["A", "Comment as-tu perçu ta relation avec le ballon ?", "Excellente", "Extrêmement difficile"],
+  ["B", "As-tu eu le sentiment de percevoir le jeu avec clarté, fluidité, précision et rapidité ?", "Tout à fait", "Pas du tout"],
+  ["C", "As-tu réussi à résoudre les problèmes posés par le jeu ?", "Tout à fait", "Pas du tout"],
+  ["D", "À quel point la séance/match t'a-t-elle semblé difficile ?", "Extrêmement facile", "Effort insoutenable"],
+  ["E", "Comment as-tu perçu ta capacité à enchaîner les efforts ?", "Excellente", "Extrêmement mauvaise"],
+  ["F", "As-tu ressenti du plaisir au cours de la séance/match ?", "Maximal", "Aucun"],
+  ["G", "À quel point as-tu trouvé du sens dans cet entraînement/match ?", "Maximal", "Aucun"],
+  ["H", "Comment as-tu perçu ton niveau de concentration ?", "Excellent", "Extrêmement mauvais"]
 ];
 
+// Questionnaire AVANT pratique
+const questionsAvant = [
+  ["energie", "À quel point tu as de l'énergie pour la séance/match d'aujourd'hui ?", "Maximal", "Aucun"],
+  ["motivation", "Comment estimes-tu ta motivation aujourd'hui ?", "Maximale", "Aucune"]
+];
 
+let modeActuel = ""; // "avant" ou "apres"
+let questionsActives = [];
+let reponses = {};
 
-let reponses={};
+function choisirFormulaire(type) {
+  modeActuel = type;
+  reponses = { typeFormulaire: type };
 
+  document.getElementById("page-accueil").classList.add("cacher");
+  document.getElementById("page-formulaire").classList.remove("cacher");
 
+  if (type === "avant") {
+    document.body.classList.add("mode-avant");
+    document.getElementById("titre-formulaire").innerText = "Avant Pratique";
+    questionsActives = questionsAvant;
+  } else {
+    document.body.classList.remove("mode-avant");
+    document.getElementById("titre-formulaire").innerText = "Après Pratique";
+    questionsActives = questionsApres;
+  }
 
-let zone=document.getElementById("questions");
-
-
-
-questions.forEach(q=>{
-
-
-zone.innerHTML += `
-
-<div class="question">
-
-
-<div class="titre">
-${q[0]} - ${q[1]}
-</div>
-
-
-<input
-type="range"
-id="${q[0]}"
-min="0"
-max="100"
-step="1"
-value="0"
-class="eva-slider not-selected"
->
-
-
-<div class="labels">
-
-<div>
-<strong>0</strong><br>
-${q[2]}
-</div>
-
-
-<div style="text-align:right">
-
-<strong>100</strong><br>
-${q[3]}
-
-</div>
-
-</div>
-
-
-
-
-
-</div>
-
-`;
-
-
-
-});
-
-
-
-questions.forEach(q=>{
-
-let slider=document.getElementById(q[0]);
-
-
-slider.oninput=function(){
-
-    // Le curseur devient visible dès la première interaction
-    this.classList.remove("not-selected");
-
-    // Enregistre la réponse
-    reponses[q[0]] = this.value;
-
-};
-
-});
-
-
-
-
-function envoyer(){
-
-
-
-reponses.nom=document.getElementById("nom").value;
-
-reponses.prenom=document.getElementById("prenom").value;
-
-
-
-fetch(URL_GOOGLE_SHEET,{
-
-method:"POST",
-
-body:JSON.stringify(reponses)
-
-})
-
-
-.then(()=>{
-
-alert("Merci pour ton retour !");
-
-location.reload();
-
-});
-
-
+  genererQuestions();
 }
 
+function retourAccueil() {
+  document.body.classList.remove("mode-avant");
+  document.getElementById("page-formulaire").classList.add("cacher");
+  document.getElementById("page-accueil").classList.remove("cacher");
+  document.getElementById("nom").value = "";
+  document.getElementById("prenom").value = "";
+  reponses = {};
+}
 
+function genererQuestions() {
+  const zone = document.getElementById("questions");
+  zone.innerHTML = "";
 
+  questionsActives.forEach(q => {
+    const labelTitre = (modeActuel === "apres") ? `${q[0]} - ${q[1]}` : q[1];
+
+    zone.innerHTML += `
+      <div class="question">
+        <div class="header-question">
+          <div class="titre">${labelTitre}</div>
+          <div class="valeur-bulle" id="val-${q[0]}">0</div>
+        </div>
+
+        <input 
+          type="range" 
+          id="${q[0]}" 
+          min="0" 
+          max="100" 
+          step="1" 
+          value="50" 
+          class="eva-slider not-selected"
+        >
+
+        <div class="labels">
+          <div><strong>0</strong><br>${q[2]}</div>
+          <div style="text-align:right"><strong>100</strong><br>${q[3]}</div>
+        </div>
+      </div>
+    `;
+  });
+
+  // Activation des événements
+  questionsActives.forEach(q => {
+    const slider = document.getElementById(q[0]);
+    const bulle = document.getElementById(`val-${q[0]}`);
+
+    slider.oninput = function() {
+      this.classList.remove("not-selected");
+      bulle.style.visibility = "visible";
+      bulle.innerText = this.value;
+      reponses[q[0]] = this.value;
+    };
+  });
+}
+
+function envoyer() {
+  const nom = document.getElementById("nom").value.trim();
+  const prenom = document.getElementById("prenom").value.trim();
+
+  if (!nom || !prenom) {
+    alert("Merci de renseigner ton nom et ton prénom.");
+    return;
+  }
+
+  // Vérification que toutes les questions ont été renseignées
+  if (Object.keys(reponses).length - 1 < questionsActives.length) {
+    alert("Merci de répondre à toutes les questions.");
+    return;
+  }
+
+  reponses.nom = nom;
+  reponses.prenom = prenom;
+
+  const btn = document.getElementById("btn-envoyer");
+  btn.innerText = "Envoi en cours...";
+  btn.disabled = true;
+
+  fetch(URL_GOOGLE_SHEET, {
+    method: "POST",
+    body: JSON.stringify(reponses)
+  })
+  .then(() => {
+    alert("Merci pour ton retour !");
+    location.reload();
+  })
+  .catch(err => {
+    alert("Erreur lors de l'envoi.");
+    btn.innerText = "Envoyer mes réponses";
+    btn.disabled = false;
+  });
+}
 </script>
 
-
 </body>
-
 </html>
 
 
