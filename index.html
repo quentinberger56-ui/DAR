@@ -139,19 +139,6 @@ input[type="text"]:focus {
   line-height: 1.4;
 }
 
-.valeur-bulle {
-  font-size: 16px;
-  font-weight: 800;
-  background: var(--fcf-red);
-  color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
-  min-width: 45px;
-  text-align: center;
-  visibility: hidden;
-  box-shadow: 0 4px 10px rgba(227, 6, 19, 0.3);
-}
-
 /* Sliders */
 input[type="range"] {
   width: 100%;
@@ -394,7 +381,6 @@ function genererQuestions() {
       <div class="question">
         <div class="header-question">
           <div class="titre">${labelTitre}</div>
-          <div class="valeur-bulle" id="val-${q[0]}">0</div>
         </div>
 
         <input 
@@ -408,8 +394,8 @@ function genererQuestions() {
         >
 
         <div class="labels">
-          <div><strong>0</strong> - ${q[2]}</div>
-          <div style="text-align:right"><strong>100</strong> - ${q[3]}</div>
+          <div>${q[2]}</div>
+          <div style="text-align:right">${q[3]}</div>
         </div>
       </div>
     `;
@@ -418,12 +404,9 @@ function genererQuestions() {
   // Activation des événements
   questionsActives.forEach(q => {
     const slider = document.getElementById(q[0]);
-    const bulle = document.getElementById(`val-${q[0]}`);
 
     slider.oninput = function() {
       this.classList.remove("not-selected");
-      bulle.style.visibility = "visible";
-      bulle.innerText = this.value;
       reponses[q[0]] = this.value;
     };
   });
